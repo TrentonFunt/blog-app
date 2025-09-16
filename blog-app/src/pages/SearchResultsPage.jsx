@@ -1,35 +1,31 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useLocation } from 'react-router';
-import postsData from '../data/posts';
 import PostList from '../components/shared/PostList';
 import SectionHeading from '../components/ui/SectionHeading';
 import EmptyState from '../components/ui/EmptyState';
 import { Dialog, DialogPanel, DialogTitle, Transition } from '@headlessui/react';
+import { usePosts } from '../context/PostContext';
 
 export default function SearchResultsPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const searchQuery = queryParams.get('q') || '';
-  const [results, setResults] = useState(postsData);
   const [showModal, setShowModal] = useState(false);
+  const { searchResults, isSearching, searchPosts, clearSearch } = usePosts();
 
   useEffect(() => {
-    if (!searchQuery) {
-      setResults(postsData);
+    if (searchQuery.trim()) {
+      searchPosts(searchQuery);
     } else {
-      setResults(
-        postsData.filter(post =>
-          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.category.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      );
+      clearSearch();
     }
-  }, [searchQuery]);
+  }, [searchQuery, searchPosts, clearSearch]);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <SectionHeading icon="🔍">Search Results</SectionHeading>
+      <SectionHeading icon="🔍">
+        Search Results {searchQuery && `for "${searchQuery}"`}
+      </SectionHeading>
       <button
         className="btn btn-outline btn-sm mb-6"
         onClick={() => setShowModal(true)}
@@ -54,10 +50,18 @@ export default function SearchResultsPage() {
           </div>
         </Dialog>
       </Transition>
-      {results.length > 0 ? (
-        <PostList posts={results} />
+      
+      {isSearching ? (
+        <div className="flex justify-center items-center py-16">
+          <div className="loading loading-spinner loading-lg"></div>
+        </div>
+      ) : searchResults.length > 0 ? (
+        <PostList posts={searchResults} />
       ) : (
-        <EmptyState message="No posts found matching your search." icon="😕" />
+        <EmptyState 
+          message={searchQuery ? `No posts found matching "${searchQuery}"` : "No search query provided"} 
+          icon="😕" 
+        />
       )}
     </div>
   );

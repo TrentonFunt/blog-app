@@ -1,6 +1,7 @@
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import { Outlet } from "react-router";
+import { PageTransition } from "../animations";
 
 export default function Layout() {
   return (
@@ -8,7 +9,9 @@ export default function Layout() {
       <NavBar />
       <main className="flex-1">
         <div className="container mx-auto max-w-4xl px-6 py-12">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </div>
       </main>
       <Footer />
