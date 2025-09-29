@@ -214,42 +214,116 @@ blog-app/
 
 ## 🚀 Deployment
 
-### Vercel Deployment (Frontend)
+This project is designed for deployment with **Vercel (Frontend)** and **Railway (Backend)**.
 
-1. **Build the project**
-   ```bash
-   npm run build
+### Frontend Deployment (Vercel)
+
+1. **Prerequisites**
+   - GitHub repository with your code
+   - Vercel account (free tier available)
+   - Backend deployed and accessible
+
+2. **Build Configuration**
+   The project includes `vercel.json` for optimal deployment:
+   ```json
+   {
+     "buildCommand": "npm run build",
+     "outputDirectory": "dist",
+     "framework": "vite",
+     "rewrites": [{"source": "/(.*)", "destination": "/index.html"}],
+     "env": {
+       "VITE_STRAPI_URL": "@vite_strapi_url",
+       "VITE_STRAPI_API_TOKEN": "@vite_strapi_api_token"
+     }
+   }
    ```
 
-2. **Deploy to Vercel**
-   - Connect your GitHub repository to Vercel
-   - Set environment variables in Vercel dashboard
-   - Deploy automatically on push to main branch
+3. **Deploy to Vercel**
+   ```bash
+   # Push your code to GitHub
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   
+   # Connect to Vercel
+   # 1. Go to vercel.com and sign in with GitHub
+   # 2. Click "New Project" and import your repository
+   # 3. Vercel will detect Vite automatically
+   ```
 
-3. **Environment Variables for Production**
+4. **Environment Variables in Vercel**
+   Add these in your Vercel project dashboard:
    ```env
-   VITE_STRAPI_URL=https://your-strapi-domain.com
+   VITE_STRAPI_URL=https://your-railway-backend.railway.app
    VITE_STRAPI_API_TOKEN=your_production_api_token
-   VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_name
-   VITE_CLOUDINARY_API_KEY=your_cloudinary_key
-   VITE_CLOUDINARY_API_SECRET=your_cloudinary_secret
+   VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_name (optional)
+   VITE_CLOUDINARY_API_KEY=your_cloudinary_key (optional)
+   VITE_CLOUDINARY_API_SECRET=your_cloudinary_secret (optional)
    ```
 
-### Strapi Deployment
+### Backend Deployment (Railway)
 
-1. **Prepare for production**
+1. **Prerequisites**
+   - GitHub repository for backend
+   - Railway account (free tier available)
+   - Environment variables ready
+
+2. **Deploy to Railway**
    ```bash
-   npm run build
-   npm start
+   # The backend repository should be separate
+   # Railway will detect Node.js and Strapi automatically
    ```
 
-2. **Database Configuration**
-   - Configure production database (PostgreSQL recommended)
-   - Set up proper environment variables
+3. **Railway Environment Variables**
+   ```env
+   NODE_ENV=production
+   HOST=0.0.0.0
+   PORT=${PORT}
+   
+   # Security keys (generate new ones for production)
+   APP_KEYS=your_production_app_keys
+   API_TOKEN_SALT=your_production_salt
+   ADMIN_JWT_SECRET=your_production_admin_secret
+   TRANSFER_TOKEN_SALT=your_production_transfer_salt
+   JWT_SECRET=your_production_jwt_secret
+   ENCRYPTION_KEY=your_production_encryption_key
+   
+   # Database (SQLite works on Railway)
+   DATABASE_CLIENT=sqlite
+   DATABASE_FILENAME=/app/data/database.db
+   
+   # Cloudinary (recommended for production)
+   CLOUDINARY_NAME=your_cloudinary_name
+   CLOUDINARY_KEY=your_cloudinary_key
+   CLOUDINARY_SECRET=your_cloudinary_secret
+   ```
 
-3. **Media Storage**
-   - Configure Cloudinary for production
-   - Set up proper CORS for production domain
+4. **Post-Deployment Setup**
+   ```bash
+   # 1. Access your Railway backend URL
+   # 2. Go to /admin and create your admin account
+   # 3. Generate API token in Strapi admin
+   # 4. Update Vercel environment with the API token
+   # 5. Update CORS settings in Strapi to include your Vercel domain
+   ```
+
+### Complete Deployment Process
+
+1. **Backend First (Railway)**
+   - Deploy Strapi to Railway
+   - Set up admin account
+   - Generate API token
+   - Configure CORS for your future Vercel domain
+
+2. **Frontend Second (Vercel)**
+   - Update environment variables with Railway backend URL
+   - Deploy to Vercel
+   - Update Railway CORS with actual Vercel domain
+
+3. **Final Configuration**
+   - Test API connectivity
+   - Create sample content
+   - Verify all functionality works
 
 ## 📱 Responsive Design
 
