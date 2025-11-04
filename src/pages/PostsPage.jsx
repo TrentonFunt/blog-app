@@ -3,7 +3,7 @@ import PostList from '../components/shared/PostList';
 import SearchBar from '../components/shared/SearchBar';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import { usePosts } from '../context/PostContext';
-import { useAdmin } from '../context/AdminContext';
+import { useAdmin } from '../hooks/useAdmin';
 import { 
   FadeInUp, 
   StaggerContainer, 

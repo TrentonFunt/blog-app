@@ -7,7 +7,7 @@ import PrimaryButton from '../components/ui/PrimaryButton';
 import PostContent from '../components/ui/PostContent';
 import PostList from '../components/shared/PostList';
 import { usePosts } from '../context/PostContext';
-import { useAdmin } from '../context/AdminContext';
+import { useAdmin } from '../hooks/useAdmin';
 import { formatDate } from '../utils/dateUtils';
 import { 
   FadeInUp, 

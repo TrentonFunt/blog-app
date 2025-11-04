@@ -1,12 +1,9 @@
 import { Link } from 'react-router';
 import DarkModeToggle from '../ui/DarkModeToggle';
 import PrimaryButton from '../ui/PrimaryButton';
-import { HomeIcon, NewspaperIcon, PlusIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
-import { useAdmin } from '../../context/AdminContext';
+import { HomeIcon, NewspaperIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 export default function NavBar() {
-  const { isAdminMode, toggleAdminMode } = useAdmin();
-
   return (
     <nav className="navbar bg-base-100 shadow-md px-4 py-2 flex items-center justify-between rounded-b-xl">
       <div className="flex items-center gap-6">
@@ -23,16 +20,7 @@ export default function NavBar() {
             <PlusIcon className="w-4 h-4" /> New Post
           </PrimaryButton>
         </Link>
-        <button
-          onClick={toggleAdminMode}
-          className={`btn btn-sm ${isAdminMode ? 'btn-primary' : 'btn-outline'}`}
-          title={isAdminMode ? 'Exit Admin Mode' : 'Enter Admin Mode'}
-        >
-          <Cog6ToothIcon className="w-4 h-4" />
-          {isAdminMode ? 'Admin' : 'Admin'}
-        </button>
         <DarkModeToggle />
-        {/* Add user avatar/profile here if needed */}
       </div>
     </nav>
   );

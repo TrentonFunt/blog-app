@@ -1,14 +1,15 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-const AdminContext = createContext();
+import React, { useState, useEffect } from 'react';
+import { AdminContext } from './adminContextValue';
 
 export const AdminProvider = ({ children }) => {
-  const [isAdminMode, setIsAdminMode] = useState(false);
+  // Always enable admin mode (everyone can edit/delete)
+  const [isAdminMode, setIsAdminMode] = useState(true);
 
   // Load admin mode from localStorage on mount
   useEffect(() => {
-    const savedMode = localStorage.getItem('adminMode') === 'true';
-    setIsAdminMode(savedMode);
+    const savedMode = localStorage.getItem('adminMode');
+    // Default to true if not set
+    setIsAdminMode(savedMode === 'false' ? false : true);
   }, []);
 
   // Store admin mode in localStorage when it changes
@@ -25,12 +26,4 @@ export const AdminProvider = ({ children }) => {
       {children}
     </AdminContext.Provider>
   );
-};
-
-export const useAdmin = () => {
-  const context = useContext(AdminContext);
-  if (context === undefined) {
-    throw new Error('useAdmin must be used within an AdminProvider');
-  }
-  return context;
 };
