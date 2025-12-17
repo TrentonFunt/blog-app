@@ -1,7 +1,9 @@
 // API service for communicating with Strapi backend
 import mockPosts from '../data/posts.js';
 
-const API_BASE_URL = 'http://localhost:1338/api';
+const API_BASE_URL = import.meta.env.VITE_STRAPI_URL 
+  ? `${import.meta.env.VITE_STRAPI_URL}/api` 
+  : 'http://localhost:1338/api';
 const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 
 class ApiService {
