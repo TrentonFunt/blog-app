@@ -24,6 +24,7 @@
     "VITE_STRAPI_API_TOKEN": "@vite_strapi_api_token",
     "VITE_CLOUDINARY_CLOUD_NAME": "@vite_cloudinary_cloud_name",
     "VITE_CLOUDINARY_API_KEY": "@vite_cloudinary_api_key",
-    "VITE_CLOUDINARY_API_SECRET": "@vite_cloudinary_api_secret"
+    "VITE_CLOUDINARY_API_SECRET": "@vite_cloudinary_api_secret",
+    "VITE_USE_MOCK_DATA": "true"
   }
 }

@@ -13,7 +13,7 @@ export default function PostList({ posts, showAdminControls = false }) {
   return (
     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
       {posts.map(post => (
-        <PostCard key={post.slug} post={post} showAdminControls={showAdminControls} />
+        <PostCard key={post.slug || post.id} post={post} showAdminControls={showAdminControls} />
       ))}
     </div>
   );

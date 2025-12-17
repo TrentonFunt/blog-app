@@ -31,10 +31,10 @@ export default function PostCard({ post, showAdminControls = false }) {
   return (
     <HoverScale className="h-full">
       <article className="group bg-base-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
-        {post.coverImage && (
+        {(post.coverImage || post.image) && (
           <Link to={`/posts/${post.slug}`} className="block relative overflow-hidden">
             <img
-              src={post.coverImage.url}
+              src={post.coverImage?.url || post.image}
               alt={post.title}
               className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
             />
